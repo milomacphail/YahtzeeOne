@@ -5,21 +5,31 @@ namespace YahtzeeOne
     class Dice
     {
         Random diceNumber = new Random();
+        int[] gameDice = new int[5];
 
         public void rollDice()
         {
             int diceRoll = diceNumber.Next(1, 6);
             Console.WriteLine(diceRoll);
         }
-    }
 
-
-    class Program
-    {
-        static void Main(string[] args)
+        public void gameRoll()
         {
-            Dice gameRoll = new Dice();
-            gameRoll.rollDice();
+            for (int rolledDice = 0; rolledDice < gameDice.Length; rolledDice++)
+            {
+                int diceRoll = diceNumber.Next(1, 6);
+                gameDice[rolledDice] = diceRoll;
+                Console.WriteLine(gameDice[rolledDice]);
+            }
+        }
+
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Dice Roll = new Dice();
+                Roll.gameRoll();
+            }
         }
     }
 }
