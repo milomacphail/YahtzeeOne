@@ -7,29 +7,28 @@ namespace YahtzeeOne
     class Dice
     {
         Random rand = new Random();
-        List <Dice> gameDice = new List<Dice>();
-        int gameLength = 3;
+        Dice[] gameDice = new Dice[5];
         int value;
-        int gameRound = 0;
+
 
         public Dice()
         {
             this.value = this.rollDice();
         }
 
-        public Dice(List<Dice> gameDice)
+        /*public Dice(List<Dice> gameDice)
         {
             this.value = this.rollDice();
-        }
+        }*/
 
         public int rollDice()
         {
             return rand.Next(1, 7);    
         }
 
-        public List <Dice> gameRoll()
+        public Dice[] gameRoll()
         {
-            for (int rolledDice = 0; rolledDice < gameDice.Count; rolledDice++)
+            for (int rolledDice = 0; rolledDice < gameDice.Length; rolledDice++)
             {
                 Dice die = new Dice();
                 gameDice[rolledDice] = die;
@@ -37,7 +36,7 @@ namespace YahtzeeOne
             return gameDice;
         }
 
-        public List <Dice> reRoll()
+        /*public Dice[] reRoll()
         {
 
             if (gameRound < gameLength)
@@ -55,19 +54,31 @@ namespace YahtzeeOne
                 }
             }
             return gameDice;
+        }*/
+
+    }
+
+    public class Game
+    {
+        int gameLength = 4;
+
+        public void ThreeRoundGame()
+        {
+            for (int gameRound = 1; gameRound < gameLength; gameRound ++)
+            {
+                Console.WriteLine("Round {0}", gameRound);
+                Dice Roll = new Dice();
+                Dice[] showRoll = Roll.gameRoll();
+                Output.ConsoleIt(showRoll);
+            }
+
         }
 
     }
 
-    /*public class Game
-    {
-        if 
-    }*/
-
-
     class Output
     {
-        public static void ConsoleIt(List <Dice> gameDice)
+        public static void ConsoleIt(Dice[] gameDice)
         {
             foreach (Dice item in gameDice)
             {
@@ -80,9 +91,8 @@ namespace YahtzeeOne
     {
         static void Main(string[] args)
         {
-            Dice Roll = new Dice();
-            List <Dice> showRoll = Roll.gameRoll();
-            Output.ConsoleIt(showRoll);
+            Game playGame = new Game();
+            playGame.ThreeRoundGame();
         }
     }
 }
