@@ -1,28 +1,35 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace YahtzeeOne
 {
     class Dice
     {
         Random rand = new Random();
-        Dice[] gameDice = new Dice[5];
-        int gameRound = 0;
+        List <Dice> gameDice = new List<Dice>();
         int gameLength = 3;
         int value;
+        int gameRound = 0;
 
         public Dice()
         {
             this.value = this.rollDice();
         }
 
-        public int rollDice()
+        public Dice(List<Dice> gameDice)
         {
-            return rand.Next(1, 6);    
+            this.value = this.rollDice();
         }
 
-        public Dice[] gameRoll()
+        public int rollDice()
         {
-            for (int rolledDice = 0; rolledDice < gameDice.Length; rolledDice++)
+            return rand.Next(1, 7);    
+        }
+
+        public List <Dice> gameRoll()
+        {
+            for (int rolledDice = 0; rolledDice < gameDice.Count; rolledDice++)
             {
                 Dice die = new Dice();
                 gameDice[rolledDice] = die;
@@ -30,12 +37,20 @@ namespace YahtzeeOne
             return gameDice;
         }
 
-        public Dice[] reRoll()
+        public List <Dice> reRoll()
         {
+
             if (gameRound < gameLength)
             {
                 {
-                    gameDice = gameRoll();
+                    Console.WriteLine("Would you like to reroll?: ");
+                    string playerAnswer = Console.ReadLine();
+                    if (playerAnswer == "yes" || playerAnswer == "y")
+                    {
+                        Console.WriteLine("Choose a dice to re-roll");
+                        string diceReRollInput = Console.ReadLine();
+                        List<Dice> reRolledDie = new List <Dice>();
+                    } 
                     gameRound++;
                 }
             }
@@ -44,16 +59,20 @@ namespace YahtzeeOne
 
     }
 
+    /*public class Game
+    {
+        if 
+    }*/
+
+
     class Output
     {
-        public static void ConsoleIt(Dice[] gameDice)
+        public static void ConsoleIt(List <Dice> gameDice)
         {
             foreach (Dice item in gameDice)
             {
                 Console.WriteLine(item.rollDice()); ;
             }
-
-            //Console.WriteLine("Total Cards:  {0}");
         }
     }
 
@@ -62,7 +81,7 @@ namespace YahtzeeOne
         static void Main(string[] args)
         {
             Dice Roll = new Dice();
-            var showRoll = Roll.gameRoll();
+            List <Dice> showRoll = Roll.gameRoll();
             Output.ConsoleIt(showRoll);
         }
     }
