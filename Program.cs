@@ -4,8 +4,12 @@ using System.Collections.Generic;
 
 namespace YahtzeeOne
 {
+
     class Dice
     {
+        int gameRound = 0;
+        int gameLength = 3;
+
         Random rand = new Random();
         Dice[] gameDice = new Dice[5];
         int value;
@@ -16,27 +20,27 @@ namespace YahtzeeOne
             this.value = this.rollDice();
         }
 
-        /*public Dice(List<Dice> gameDice)
-        {
-            this.value = this.rollDice();
-        }*/
-
         public int rollDice()
         {
             return rand.Next(1, 7);    
+        }
+
+        public int rollDice(Dice die)
+        {
+            return rand.Next(1, 7);
         }
 
         public Dice[] gameRoll()
         {
             for (int rolledDice = 0; rolledDice < gameDice.Length; rolledDice++)
             {
-                Dice die = new Dice();
-                gameDice[rolledDice] = die;
+                gameDice[rolledDice] = new Dice();
             }
+            Output.ConsoleIt(gameDice);
             return gameDice;
         }
 
-        /*public Dice[] reRoll()
+        public Dice[] reRoll()
         {
 
             if (gameRound < gameLength)
@@ -47,20 +51,31 @@ namespace YahtzeeOne
                     if (playerAnswer == "yes" || playerAnswer == "y")
                     {
                         Console.WriteLine("Choose a dice to re-roll");
-                        string diceReRollInput = Console.ReadLine();
-                        List<Dice> reRolledDie = new List <Dice>();
+                        int diceReRollInput = Convert.ToInt32(Console.ReadLine());
+                        Dice dieReRolled = gameDice[diceReRollInput];
+                        dieReRolled.rollDice(dieReRolled);
+
                     } 
                     gameRound++;
                 }
             }
+            Output.ConsoleIt(gameDice);
             return gameDice;
-        }*/
+        }
 
     }
 
     public class Game
     {
         int gameLength = 4;
+
+        public void Round()
+        {
+                Dice Roll = new Dice();
+                Dice[] showRoll = Roll.gameRoll();
+                Output.ConsoleIt(showRoll);
+        }
+
 
         public void ThreeRoundGame()
         {
@@ -71,7 +86,6 @@ namespace YahtzeeOne
                 Dice[] showRoll = Roll.gameRoll();
                 Output.ConsoleIt(showRoll);
             }
-
         }
 
     }
@@ -91,8 +105,9 @@ namespace YahtzeeOne
     {
         static void Main(string[] args)
         {
-            Game playGame = new Game();
-            playGame.ThreeRoundGame();
+            Dice newGame = new Dice();
+            Dice[] gameRoll = newGame.gameRoll();
+            
         }
     }
 }
